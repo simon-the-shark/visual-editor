@@ -34,6 +34,7 @@ class LinkDialogState extends State<LinkDialog> {
   @override
   Widget build(BuildContext context) => AlertDialog(
         backgroundColor: widget.dialogTheme?.dialogBackgroundColor,
+        shape: widget.dialogTheme?.shape,
         content: TextField(
           keyboardType: TextInputType.multiline,
           maxLines: null,

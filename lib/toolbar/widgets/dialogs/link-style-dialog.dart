@@ -39,6 +39,7 @@ class _LinkStyleDialogState extends State<LinkStyleDialog> {
   @override
   Widget build(BuildContext context) => AlertDialog(
         backgroundColor: widget.dialogTheme?.dialogBackgroundColor,
+        shape: widget.dialogTheme?.shape,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
