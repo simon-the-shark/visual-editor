@@ -84,9 +84,7 @@ class TextGesturesService {
         if (isAppleOS(platform)) {
           switch (event.kind) {
             case PointerDeviceKind.mouse:
-
             case PointerDeviceKind.stylus:
-
             case PointerDeviceKind.invertedStylus:
               // Precise devices should place the cursor at a precise position.
               // If `Shift` key is pressed then extend current selection instead.
@@ -107,7 +105,6 @@ class TextGesturesService {
               break;
 
             case PointerDeviceKind.touch:
-
             case PointerDeviceKind.unknown:
               // On macOS/iOS/iPadOS a touch tap places the cursor at the edge of the word.
               _selectionService.selectWordEdge(SelectionChangedCause.tap);
@@ -385,10 +382,8 @@ class TextGesturesService {
   }
 
   bool _isShiftClick(PointerDeviceKind deviceKind) {
-    final pressed = RawKeyboard.instance.keysPressed;
-    final shiftPressed = pressed.contains(LogicalKeyboardKey.shiftLeft) ||
-        pressed.contains(LogicalKeyboardKey.shiftRight);
-
+    final pressed = HardwareKeyboard.instance.logicalKeysPressed;
+    final shiftPressed = pressed.contains(LogicalKeyboardKey.shift);
     return deviceKind == PointerDeviceKind.mouse && shiftPressed;
   }
 }

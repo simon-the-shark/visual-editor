@@ -23,10 +23,12 @@ class TypingShortcutsService {
   // Returns the pressed or released key.
   KeyEventResult getKeyEventResult(
     FocusNode node,
-    RawKeyEvent event,
+    KeyEvent event,
   ) {
     // Don't handle key if there is a meta key pressed.
-    if (event.isAltPressed || event.isControlPressed || event.isMetaPressed) {
+    if (event.logicalKey == LogicalKeyboardKey.alt ||
+        event.logicalKey == LogicalKeyboardKey.control ||
+        event.logicalKey == LogicalKeyboardKey.meta) {
       return KeyEventResult.ignored;
     }
 
@@ -57,7 +59,7 @@ class TypingShortcutsService {
 
   // === PRIVATE ==
 
-  KeyEventResult _handleSpaceKey(RawKeyEvent event) {
+  KeyEventResult _handleSpaceKey(KeyEvent event) {
     final child = state.refs.documentController.queryChild(
       _selectionService.selection.baseOffset,
     );
@@ -95,7 +97,7 @@ class TypingShortcutsService {
     return KeyEventResult.handled;
   }
 
-  KeyEventResult _handleTabKey(RawKeyEvent event) {
+  KeyEventResult _handleTabKey(KeyEvent event) {
     final child = state.refs.documentController.queryChild(
       _selectionService.selection.baseOffset,
     );
@@ -107,7 +109,7 @@ class TypingShortcutsService {
     }
 
     if (nodeParent == null || nodeParent is! BlockM) {
-      return event.isShiftPressed
+      return event.logicalKey == LogicalKeyboardKey.shift
           ? _removeTabCharacter()
           : _insertTabCharacter();
     }
@@ -118,12 +120,13 @@ class TypingShortcutsService {
             nodeParent.style.containsKey(AttributesAliasesM.bulletList.key) ||
             nodeParent.style.containsKey(AttributesAliasesM.checked.key);
     if (canBeIndented) {
-      state.refs.controller.indentSelection(!event.isShiftPressed);
+      state.refs.controller
+          .indentSelection(!(event.logicalKey == LogicalKeyboardKey.shift));
       return KeyEventResult.handled;
     }
 
     if (node is! LineM || (node.isNotEmpty && node.first is! String)) {
-      return event.isShiftPressed
+      return event.logicalKey == LogicalKeyboardKey.shift
           ? _removeTabCharacter()
           : _insertTabCharacter();
     }

@@ -457,9 +457,9 @@ class VisualEditorState extends State<VisualEditor>
   Widget _conditionalPreventKeyPropagationToParentIfWeb(
           {required Widget child}) =>
       kIsWeb
-          ? RawKeyboardListener(
+          ? KeyboardListener(
               focusNode: FocusNode(
-                onKey: _typingShortcutsService.getKeyEventResult,
+                onKeyEvent: _typingShortcutsService.getKeyEventResult,
               ),
               child: child,
             )
