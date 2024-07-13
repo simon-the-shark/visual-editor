@@ -50,7 +50,8 @@ class LinkDialogState extends State<LinkDialog> {
         actions: [
           TextButton(
             onPressed: _link.isNotEmpty &&
-                    AutoFormatMultipleLinksRule.linkRegExp.hasMatch(_link)
+                    AutoFormatMultipleLinksRule.linkRegExp
+                        .hasMatch(_link.endsWith(' ') ? _link : '$_link ')
                 ? _applyLink
                 : null,
             child: Text(

@@ -86,7 +86,8 @@ class _LinkStyleDialogState extends State<LinkStyleDialog> {
       return false;
     }
 
-    if (!AutoFormatMultipleLinksRule.linkRegExp.hasMatch(_link)) {
+    if (!AutoFormatMultipleLinksRule.linkRegExp
+        .hasMatch(_link.endsWith(' ') ? _link : '$_link ')) {
       return false;
     }
 
